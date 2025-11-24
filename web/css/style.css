@@ -1,0 +1,192 @@
+/* --- 1. Cài đặt chung (Reset & Variables) --- */
+:root {
+    --primary-blue: #021438;       /* Màu xanh đậm của header/text */
+    --action-blue: #2c87c5;        /* Màu xanh của nút bấm */
+    --action-hover: #1a669e;       /* Màu nút khi hover */
+    --bg-light: #f4f7f6;           /* Màu nền trang web */
+    --white: #ffffff;
+    --text-gray: #586069;
+    --border-color: #e1e4e8;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--primary-blue);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a { text-decoration: none; }
+
+/* --- 2. Header Styling --- */
+.header {
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    cursor: pointer;
+}
+
+.logo .dot { color: var(--action-blue); }
+
+.navbar { display: flex; gap: 25px; align-items: center; }
+
+.nav-link {
+    color: var(--text-gray);
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover { color: var(--action-blue); }
+
+.login-btn {
+    color: var(--action-blue);
+    border: 1px solid var(--action-blue);
+    padding: 8px 20px;
+    border-radius: 4px;
+}
+
+.login-btn:hover {
+    background-color: var(--action-blue);
+    color: var(--white);
+}
+
+.mobile-menu { display: none; font-size: 24px; cursor: pointer; }
+
+/* --- 3. Hero Section (Phần chính) --- */
+.hero-section {
+    padding: 60px 0;
+    min-height: 80vh; /* Chiếm phần lớn màn hình */
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Cái hộp trắng ở giữa */
+.shortener-box {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto; /* Căn giữa theo chiều ngang */
+}
+
+.title {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--primary-blue);
+}
+
+/* Form nhập liệu */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.url-input {
+    flex-grow: 1; /* Chiếm hết khoảng trống còn lại */
+    padding: 15px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.url-input:focus {
+    border-color: var(--action-blue);
+    background-color: var(--white);
+}
+
+.shorten-btn {
+    background-color: var(--action-blue);
+    color: var(--white);
+    border: none;
+    padding: 0 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.shorten-btn:hover { background-color: var(--action-hover); }
+
+.description {
+    font-size: 14px;
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- 4. Feature Section --- */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Chia 3 cột đều nhau */
+    gap: 30px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.feature-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature-item p {
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+/* --- 5. Footer --- */
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+    font-size: 13px;
+    border-top: 1px solid #eee;
+    background: var(--white);
+}
+
+/* --- Responsive (Mobile) --- */
+@media (max-width: 768px) {
+    .input-group { flex-direction: column; }
+    .shorten-btn { padding: 15px; width: 100%; }
+    .navbar { display: none; } /* Ẩn menu trên mobile để đơn giản */
+    .mobile-menu { display: block; }
+    .features { grid-template-columns: 1fr; } /* Chuyển thành 1 cột */
+    .title { font-size: 24px; }
+}

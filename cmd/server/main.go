@@ -1,41 +1,18 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"log"
-	"time"
-	"url-shortener-t/internal/config"
-	"url-shortener-t/internal/model"
-	"url-shortener-t/internal/repository"
+	"url-shortener-t/internal/route"
 
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	cfg := config.LoadConfig()
+	r := gin.Default()
 
-	_, collection := repository.ConnectDatabase(cfg.Database.URI, cfg.Database.Name)
+	r.LoadHTMLGlob("web/template/*")
+	r.Static("/css", "./web/css")
 
-	newUrl := model.Url{
-		Domain:     "facebook.com",
-		Alias:      "fb-profile",
-		LongUrl:    "https://www.facebook.com/profile.php?id=1000...",
-		TotalClick: 0,
-		CreatedAt:  time.Now(),
-		UpdateAt:   time.Now(),
-		ExpiredAt:  time.Now().Add(7 * 24 * time.Hour),
-	}
+	route.NewRouter(r)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	result, err := collection.InsertOne(ctx, newUrl)
-	if err != nil {
-		log.Fatal("Lỗi khi thêm dữ liệu: ", err)
-	}
-
-	oid, _ := result.InsertedID.(primitive.ObjectID)
-	fmt.Printf("Đã thêm thành công! ID của bản ghi: %s\n", oid.Hex())
-
+	r.Run(":8080")
 }
