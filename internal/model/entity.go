@@ -7,9 +7,9 @@ import (
 )
 
 type Url struct {
-	ID         primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Id         primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Domain     string             `bson:"domain,omitempty" json:"domain"`
-	Alias      string             `bson:"alias,omitempty" json:"alias"`
+	Pattern    string             `bson:"pattern" json:"pattern"`
 	LongUrl    string             `bson:"long_url,omitempty" json:"long_url"`
 	TotalClick int                `bson:"total_click" json:"total_click"`
 	CreatedAt  time.Time          `bson:"created_at,omitempty" json:"created_at"`

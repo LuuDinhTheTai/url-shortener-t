@@ -190,3 +190,67 @@ a { text-decoration: none; }
     .features { grid-template-columns: 1fr; } /* Chuyển thành 1 cột */
     .title { font-size: 24px; }
 }
+
+/* --- [MỚI] Style cho Result Box --- */
+.result-container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 15px 20px;
+    background-color: #ebf8ff; /* Màu nền xanh rất nhạt */
+    border: 1px solid var(--action-blue);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.result-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.result-text .label {
+    font-size: 12px;
+    color: var(--text-gray);
+    margin-bottom: 2px;
+}
+
+.short-link {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--action-blue);
+}
+
+.copy-btn {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.copy-btn:hover {
+    background-color: #052c65;
+}
+
+/* Hiệu ứng hiện ra từ từ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive cho phần kết quả trên mobile */
+@media (max-width: 768px) {
+    .result-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .result-text { align-items: center; }
+    .copy-btn { width: 100%; }
+}

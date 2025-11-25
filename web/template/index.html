@@ -26,13 +26,21 @@
         <div class="shortener-box">
             <h1 class="title">Paste the URL to be shortened</h1>
 
-            <form class="shorten-form" onsubmit="event.preventDefault();">
+            <form id="shorten-form" class="shorten-form">
                 <div class="input-group">
-                    <input type="url" placeholder="Enter the link here" required class="url-input">
+                    <input id="url-input" type="url" placeholder="Enter the link here" required class="url-input">
                     <button type="submit" class="shorten-btn">Shorten URL</button>
                 </div>
             </form>
 
+            <div class="result-container" id="result-box" style="display: none;">
+                <div class="result-text">
+                    <span class="label">Your shortened URL:</span>
+                    <a href="#" class="short-link" id="shortLinkDisplay" target="_blank">shorturl.at/AbCdE</a>
+                </div>
+                <button class="copy-btn" onclick="copyLink()">Copy</button>
+            </div>
+            
             <div class="description">
                 Url.Shortener.T is a free tool to shorten a URL or reduce a link.<br>
                 Use our URL Shortener to create a shortened & neat link making it easy to remember.
@@ -60,5 +68,6 @@
     <p>© 2025 Url.Shortener.T Clone by Gemini. All rights reserved.</p>
 </footer>
 
+<script src="/js/index.js"></script>
 </body>
 </html>

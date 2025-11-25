@@ -8,22 +8,23 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-func ConnectDatabase(uri string, dbName string) (*mongo.Client, *mongo.Collection) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+type Repository[T interface{}] interface {
+	Create(t T) T
+	Find(id string) T
+	FindAll() []T
+	Update(id string, t T) T
+	Delete(id string)
+}
+
+func ConnectDatabase(uri string) (*mongo.Client, error) {
+	_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	var err error
 	client, err := mongo.Connect(options.Client().ApplyURI(uri))
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		panic("Failed to ping MongoDB: " + err.Error())
-	}
-
-	collection := client.Database(dbName).Collection("url")
-
-	return client, collection
+	return client, nil
 }
