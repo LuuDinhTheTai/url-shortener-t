@@ -1,13 +1,11 @@
-// Lấy các element từ DOM
 const shortenForm = document.getElementById('shorten-form');
 const urlInput = document.getElementById('url-input');
 const resultBox = document.getElementById('result-box');
 const shortLinkDisplay = document.getElementById('shortLinkDisplay');
 const copyButton = document.querySelector('.copy-btn');
 
-// Xử lý sự kiện submit form
 shortenForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Ngăn form gửi theo cách truyền thống
+    event.preventDefault();
 
     const longUrl = urlInput.value;
     if (!longUrl) {
@@ -16,7 +14,6 @@ shortenForm.addEventListener('submit', async (event) => {
     }
 
     try {
-        // Gửi yêu cầu POST đến server bằng Fetch API
         const response = await fetch('/shorten', {
             method: 'POST',
             headers: {
@@ -26,10 +23,24 @@ shortenForm.addEventListener('submit', async (event) => {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Something went wrong');
+            // Gracefully handle non-JSON error responses
+            let errorMessage = `HTTP error ${response.status}: ${response.statusText}`;
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.error || errorMessage;
+            } catch (e) {
+                // The error response was not JSON. We can ignore this error
+                // and stick with the default HTTP error message.
+                console.warn("Could not parse error response as JSON.");
+            }
+            throw new Error(errorMessage);
         }
 
+        // Check if the response body is empty before trying to parse it
+        const contentLength = response.headers.get('Content-Length');
+        if (contentLength === '0') {
+            throw new Error('Received an empty response from the server.');
+        }
         const data = await response.json();
 
         // Cập nhật link rút gọn và hiển thị kết quả

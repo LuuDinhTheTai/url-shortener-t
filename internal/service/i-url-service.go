@@ -7,5 +7,5 @@ import (
 )
 
 type IUrlService interface {
-	Shorten(ctx *gin.Context, longUrl string) (model.ShortenResponse, error)
+	Shorten(ctx *gin.Context, longUrl string) (*model.ShortenResponse, error)
 }

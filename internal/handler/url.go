@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"net/http"
 	"url-shortener-t/internal/model"
 	"url-shortener-t/internal/service"
 
@@ -21,15 +22,16 @@ func (h *UrlHandler) Shorten(ctx *gin.Context) {
 	var request model.ShortenRequest
 
 	if err := ctx.ShouldBindJSON(&request); err != nil {
-		ctx.JSON(400, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	response, err := h.urlService.Shorten(ctx, request.LongUrl)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		// TODO log err
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(200, response)
+	ctx.JSON(http.StatusOK, response)
 }
