@@ -6,7 +6,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type Configuration struct {
+type Config struct {
 	Server struct {
 		Port string
 		Host string
@@ -19,13 +19,20 @@ type Configuration struct {
 	}
 }
 
-func LoadConfig() (*Configuration, error) {
+type Configuration struct {
+}
+
+func NewConfiguration() *Configuration {
+	return &Configuration{}
+}
+
+func (c *Configuration) LoadConfig() (Config, error) {
 	err := godotenv.Load()
 	if err != nil {
-		return nil, err
+		return Config{}, err
 	}
 
-	cfg := &Configuration{}
+	cfg := Config{}
 	cfg.Server.Port = os.Getenv("PORT")
 	cfg.Server.Host = os.Getenv("HOST")
 	cfg.Database.URI = os.Getenv("MONGO_URI")

@@ -8,16 +8,16 @@ import (
 )
 
 type UrlHandler struct {
-	urlService service.UrlService
+	urlService service.IUrlService
 }
 
-func NewUrlHandler(urlService service.UrlService) *UrlHandler {
+func NewUrlHandler(urlService service.IUrlService) *UrlHandler {
 	return &UrlHandler{
 		urlService: urlService,
 	}
 }
 
-func (h UrlHandler) Shorten(ctx *gin.Context) {
+func (h *UrlHandler) Shorten(ctx *gin.Context) {
 	var request model.ShortenRequest
 
 	if err := ctx.ShouldBindJSON(&request); err != nil {
@@ -25,7 +25,7 @@ func (h UrlHandler) Shorten(ctx *gin.Context) {
 		return
 	}
 
-	response, err := h.urlService.Shorten(request.LongUrl)
+	response, err := h.urlService.Shorten(ctx, request.LongUrl)
 	if err != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return

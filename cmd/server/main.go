@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-
-	cfg, err := config.LoadConfig()
+	configuration := config.NewConfiguration()
+	cfg, err := configuration.LoadConfig()
 	if err != nil {
 		panic(err)
 	}
@@ -29,6 +29,7 @@ func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("web/template/*")
 	r.Static("/css", "./web/css")
+	r.Static("/js", "./web/js")
 
 	route.NewRouter(r, urlHandler)
 
