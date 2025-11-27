@@ -12,7 +12,7 @@ import (
 
 func main() {
 	configuration := config.NewConfiguration()
-	cfg, err := configuration.LoadConfig()
+	cfg, err := configuration.LoadEnv()
 	if err != nil {
 		panic(err)
 	}
@@ -23,15 +23,15 @@ func main() {
 	}
 
 	urlRepository := repository.NewUrlRepository(cfg, client)
+
 	urlService := service.NewUrlService(urlRepository)
+
+	indexHandler := handler.NewIndexHandler()
 	urlHandler := handler.NewUrlHandler(urlService)
 
 	r := gin.Default()
-	r.LoadHTMLGlob("web/template/*")
-	r.Static("/css", "./web/css")
-	r.Static("/js", "./web/js")
 
-	route.NewRouter(r, urlHandler)
+	route.NewRouter(r, indexHandler, urlHandler)
 
 	err = r.Run(":8080")
 	if err != nil {

@@ -14,7 +14,7 @@ type UrlRepository struct {
 	collection *mongo.Collection
 }
 
-func NewUrlRepository(cfg config.Config, client *mongo.Client) IUrlRepository {
+func NewUrlRepository(cfg config.EnvConfig, client *mongo.Client) IUrlRepository {
 	return &UrlRepository{
 		collection: client.Database(cfg.Database.Name).Collection("urls"),
 	}

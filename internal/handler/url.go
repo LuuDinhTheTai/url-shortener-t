@@ -35,3 +35,14 @@ func (h *UrlHandler) Shorten(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, response)
 }
+
+func (h UrlHandler) Redirect(ctx *gin.Context) {
+	pattern := ctx.Param("pattern")
+	longUrl, err := h.urlService.Redirect(ctx, pattern)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+
+	ctx.Redirect(http.StatusMovedPermanently, longUrl)
+}

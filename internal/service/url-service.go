@@ -52,3 +52,20 @@ func (u *UrlService) Shorten(ctx *gin.Context, longUrl string) (*model.ShortenRe
 
 	return response, nil
 }
+
+func (u *UrlService) Redirect(ctx *gin.Context, pattern string) (string, error) {
+	url, err := u.urlRepository.FindByPattern(ctx, pattern)
+	if err != nil {
+		return "", fmt.Errorf("failed to find url by pattern: %w", err)
+	}
+
+	//url.TotalClick++
+	//url.UpdateAt = time.Now()
+
+	//_, err = u.urlRepository.Update(ctx, url)
+	//if err != nil {
+	//	return "", fmt.Errorf("failed to update url: %w", err)
+	//}
+
+	return url.LongUrl, nil
+}
